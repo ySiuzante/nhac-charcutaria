@@ -128,6 +128,26 @@ footer {background:var(--cereja);color:var(--papel);padding-block:1.4rem}
 }
 
 .mobile-menu > summary {display:none}
+.discover {background:#f8f1dc;overflow:hidden;padding:clamp(4rem,8vw,8rem) 0}
+.discover-inner {display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(2rem,6vw,7rem)}
+.discover-eyebrow {font-size:.85rem;letter-spacing:.11em;text-transform:uppercase;font-weight:800;color:#80132c}
+.discover-copy h2 {font-size:clamp(3.7rem,7vw,7rem);margin:1rem 0;max-width:8ch}
+.discover-copy h2 em {font-style:normal;color:#008d88}
+.discover-copy>p:not(.discover-eyebrow) {font-size:1.1rem;max-width:34ch}
+.discover-tabs {display:flex;flex-wrap:wrap;gap:.55rem;margin:1.6rem 0}
+.discover-tab {border:1.5px solid #80132c;color:#80132c;background:transparent;border-radius:3rem;padding:.65rem 1.1rem;font-weight:750;cursor:pointer}
+.discover-tab[aria-pressed="true"] {background:#80132c;color:white}
+.discover-description {min-height:7.2rem;border-top:1px solid #b6a79a;padding-top:1.1rem;max-width:35ch}
+.discover-description h3 {font-size:2rem;color:#80132c;margin-bottom:.5rem}
+.discover-link {display:inline-block;font-weight:800;color:#80132c;margin-top:.7rem;text-underline-offset:.3em}
+.discover-visual {position:relative;display:grid;place-items:center;min-width:0;aspect-ratio:1}
+.discover-halo {position:absolute;inset:8%;border-radius:50%;background:#1de0d2}
+.discover-halo::after {content:"";position:absolute;inset:-6%;border:2px solid #80132c;border-radius:50%;transform:rotate(-18deg) scaleY(.75)}
+.discover-frame {position:relative;width:100%;overflow:hidden;border:3px solid #80132c;border-radius:1.25rem;box-shadow:.8rem .8rem 0 #80132c}
+.discover-frame img {width:100%;aspect-ratio:1.4;object-fit:cover}
+.discover-stamp {position:absolute;right:0;bottom:4%;display:grid;place-items:center;text-align:center;line-height:1.05;font-family:var(--display);font-size:.9rem;width:6.2rem;aspect-ratio:1;border-radius:50%;background:#ffcb4a;border:2px solid #80132c;color:#80132c;transform:rotate(12deg)}
+@media(max-width:680px){.discover-inner{grid-template-columns:1fr;gap:1rem}.discover-copy h2{font-size:clamp(3.5rem,13vw,5.5rem)}.discover-visual{max-width:27rem;width:100%;justify-self:center}.discover-stamp{width:5.5rem}}
+@media(prefers-reduced-motion:no-preference) and (hover:hover){.discover-tab{transition:transform .2s ease,background .2s ease}.discover-tab:hover{transform:translateY(-3px)}.discover-frame img{transition:transform .5s ease}.discover-visual:hover .discover-frame img{transform:scale(1.05)}}
 .motion-story {overflow:hidden;background:#ffcb4a;color:#28191a;padding:clamp(3.5rem,6vw,6rem) 0}
 .motion-layout {display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(2rem,5vw,5rem)}
 .motion-kicker {font-size:.9rem;text-transform:uppercase;letter-spacing:.1em;font-weight:800;color:#80132c}
