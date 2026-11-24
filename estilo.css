@@ -166,3 +166,40 @@ footer {background:var(--cereja);color:var(--papel);padding-block:1.4rem}
   .mobile-menu[open] .menu-icon i:last-child {transform:translateY(-3.5px) rotate(-45deg)}
   @keyframes menu-in {from {opacity:0;transform:translateY(-8px) scale(.98)} to {opacity:1;transform:none}}
 }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-pic {
+    transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s ease;
+  }
+  .hero-pic:hover {
+    transform: rotate(0deg) translateY(-6px);
+    box-shadow: 1rem 1rem 0 var(--cereja);
+  }
+  .sabor-destaque {
+    transition: box-shadow .35s ease, translate .35s ease;
+  }
+  .sabor-destaque:hover, .sabor-destaque:focus-within {
+    translate: 0 -7px;
+    box-shadow: 0 1rem 2rem #3d061c66;
+  }
+  .sabor-destaque img {
+    transform-origin: center;
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .sabor-destaque:hover img, .sabor-destaque:focus-within img {
+    transform: scale(1.06);
+  }
+  .sabor-destaque li {
+    transition: color .2s ease, translate .2s ease;
+  }
+  .sabor-destaque li:hover {
+    color: var(--cereja);
+    translate: .35rem 0;
+  }
+  .filters button { transition: transform .2s ease, background-color .2s ease, color .2s ease; }
+  .filters button:hover { transform: translateY(-3px); }
+  .pairings article h3 { transition: color .25s ease, translate .25s ease; }
+  .pairings article:hover h3 { color: var(--dourado); translate: .4rem 0; }
+  nav a:not(.nav-biz) { text-decoration:none; background:linear-gradient(currentColor,currentColor) left bottom / 0 2px no-repeat; transition:background-size .25s ease; }
+  nav a:not(.nav-biz):hover, nav a:not(.nav-biz):focus-visible { background-size:100% 2px; }
+}
