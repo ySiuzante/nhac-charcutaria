@@ -30,10 +30,18 @@ if (window.gsap) {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
         observer.unobserve(entry.target);
-        gsap.from(entry.target, { y: 28, opacity: 0, duration: 0.7, ease: "power2.out", clearProps: "transform,opacity" });
+        if (entry.target.matches(".motion-scene")) {
+          gsap.timeline({ defaults: { ease: "power3.out" } })
+            .from(".motion-disc", { scale: 0.55, opacity: 0, duration: 0.8 })
+            .from(".motion-orbit", { scale: 0.7, opacity: 0, rotation: -25, duration: 0.9, stagger: 0.12 }, "<0.12")
+            .from(".motion-mascot", { y: 45, scale: 0.85, opacity: 0, duration: 0.8 }, "<0.12")
+            .from(".motion-label", { y: 18, scale: 0.85, opacity: 0, duration: 0.55, stagger: 0.12 }, "<0.18");
+        } else {
+          gsap.from(entry.target, { y: 28, opacity: 0, duration: 0.7, ease: "power2.out", clearProps: "transform,opacity" });
+        }
       }
     }, { threshold: 0.12 });
-    document.querySelectorAll(".destaques-intro, .sabor-destaque, .section-head, .family, .pairings article, .kit, .brand > div, .trade .two-col > div, .trade form").forEach((element) => observer.observe(element));
+    document.querySelectorAll(".motion-copy, .motion-scene, .destaques-intro, .sabor-destaque, .section-head, .family, .pairings article, .kit, .brand > div, .trade .two-col > div, .trade form").forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   });
 }
