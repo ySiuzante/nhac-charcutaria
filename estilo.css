@@ -113,3 +113,56 @@ footer {background:var(--cereja);color:var(--papel);padding-block:1.4rem}
   .nav nav a {min-height:2rem;display:flex;align-items:center}
   .nav .nav-biz {padding:0;border:0}
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .button, .filters button, .family, .family > img, .mascote img, summary::after {
+    transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease;
+  }
+  @media (hover: hover) {
+    .button:hover { transform: translateY(-3px); box-shadow: 0 .35rem 0 #54102755; }
+    .family:hover { transform: translateY(-6px); box-shadow: 0 .8rem 1.8rem #28191a20; }
+    .family:hover > img { transform: scale(1.04); }
+    .mascote:hover img { transform: rotate(-5deg) scale(1.05); }
+  }
+  details[open] summary::after { transform: rotate(180deg); }
+}
+
+.mobile-menu > summary {display:none}
+.destaques {background:#80132c;color:#fffcf2;padding:clamp(4rem,8vw,8rem) 0}
+.destaques-intro {max-width:57rem;margin-bottom:3rem}
+.destaques-intro > p:first-child,.sabor-tag {font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.82rem;color:#ffcb4a}
+.destaques-intro h2 {color:#ffcb4a;margin:.7rem 0 1.1rem;font-size:clamp(3rem,6vw,6.5rem)}
+.destaques-intro > p:last-child {max-width:58ch;font-size:1.1rem}
+.destaques-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.3rem;align-items:stretch}
+.sabor-destaque {background:#fffcf2;color:#28191a;border-radius:1.1rem;overflow:hidden}
+.sabor-destaque img {width:100%;aspect-ratio:1.65;object-fit:cover}
+.sabor-destaque > div {padding:1.5rem}
+.sabor-destaque .sabor-tag {color:#80132c}
+.sabor-destaque h3 {font-size:clamp(2.5rem,4vw,4rem);color:#80132c;margin:.35rem 0 .85rem}
+.sabor-destaque ul {padding:0;margin:1.2rem 0 0;list-style:none}
+.sabor-destaque li {padding:.55rem 0;border-top:1px solid #dccbc1;line-height:1.35}
+.sabor-nota {margin-top:1rem;font-weight:750;color:#80132c}
+@media(max-width:850px){.destaques-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sabor-destaque.bacon{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr}.sabor-destaque.bacon img{height:100%;aspect-ratio:auto}}
+@media(max-width:600px){.destaques-grid{grid-template-columns:1fr}.sabor-destaque.bacon{grid-column:auto;display:block}.sabor-destaque.bacon img{height:auto;aspect-ratio:1.65}}
+@media(prefers-reduced-motion:no-preference) and (hover:hover){.sabor-destaque img{transition:transform .5s ease}.sabor-destaque:hover img{transform:scale(1.04)}}
+@media (max-width: 680px) {
+  .nav {position:relative;flex-wrap:nowrap;padding:.8rem 0;min-height:5rem}
+  .mobile-menu {position:relative}
+  .mobile-menu > summary {display:flex;gap:.7rem;align-items:center;min-height:2.85rem;padding:.5rem .85rem .5rem 1rem;border:2px solid var(--cereja);border-radius:2rem;background:var(--cereja);color:white;font-size:.95rem;font-weight:750;list-style:none}
+  .mobile-menu > summary::after {content:none}
+  .menu-icon {display:grid;gap:5px;width:20px}
+  .menu-icon i {display:block;width:20px;height:2px;background:currentColor;border-radius:2px}
+  .nav .mobile-menu nav {position:absolute;right:0;top:calc(100% + .7rem);z-index:10;display:grid;width:min(18rem,calc(100vw - 2.2rem));padding:.65rem;background:var(--papel);border:2px solid var(--cereja);border-radius:1rem;box-shadow:.4rem .4rem 0 var(--cereja);gap:0}
+  .nav .mobile-menu:not([open]) nav {display:none}
+  .nav .mobile-menu nav a {display:flex;align-items:center;min-height:3rem;padding:.65rem .9rem;border-radius:.6rem;color:var(--cereja);font-size:1.05rem}
+  .nav .mobile-menu nav a:hover, .nav .mobile-menu nav a:focus-visible {background:#f6e7ce}
+  .nav .mobile-menu nav .nav-biz {margin-top:.35rem;background:var(--cereja);color:white;border:0;padding:.65rem .9rem}
+  .nav .mobile-menu nav .nav-biz:hover {background:#541027}
+}
+@media (max-width: 680px) and (prefers-reduced-motion: no-preference) {
+  .mobile-menu[open] nav {animation:menu-in .24s ease-out both}
+  .menu-icon i {transition:transform .22s ease}
+  .mobile-menu[open] .menu-icon i:first-child {transform:translateY(3.5px) rotate(45deg)}
+  .mobile-menu[open] .menu-icon i:last-child {transform:translateY(-3.5px) rotate(-45deg)}
+  @keyframes menu-in {from {opacity:0;transform:translateY(-8px) scale(.98)} to {opacity:1;transform:none}}
+}
