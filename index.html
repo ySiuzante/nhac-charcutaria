@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1de0d2">
+  <meta name="description" content="Conheça a linha planejada da Nhac!, projeto de charcutaria artesanal de Uberlândia, Minas Gerais.">
+  <title>Nhac! — Charcutaria artesanal de Uberlândia</title>
+  <link rel="icon" href="assets/simbolo.png" type="image/png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Nhac! Charcutaria artesanal de Uberlândia">
+  <meta property="og:description" content="Do salaminho de bolso à copa da tábua. Explore os sabores previstos para a charcutaria Nhac!.">
+  <meta property="og:image" content="https://nhac-charcutaria-artesanal.endlessart1.chatgpt.site/assets/capa.webp">
+  <link rel="stylesheet" href="estilo.css">
+  <script src="assets/gsap.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body id="inicio">
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header><div class="wrap nav">
+    <a class="logo" href="#inicio" aria-label="Nhac!, início"><img src="assets/simbolo.png" width="42" height="45" alt="">Nhac!</a>
+    <nav aria-label="Navegação principal"><a href="#catalogo">Catálogo</a><a href="#mesa">À mesa</a><a href="#marca">A marca</a><a class="nav-biz" href="#negocios">Para negócios</a></nav>
+  </div></header>
+  <main id="conteudo">
+    <section class="hero"><div class="wrap hero-layout">
+      <div class="hero-copy"><p class="address">Uberlândia <span aria-hidden="true">/</span> Minas Gerais</p>
+        <h1>O porco<br>é pop<span class="bang">!</span></h1>
+        <p class="lead">Do salaminho que cabe no bolso à copa que abre a roda. Conheça a charcutaria que a Nhac! está preparando em Minas.</p>
+        <a class="button dark" href="#catalogo">Explorar o catálogo</a>
+      </div>
+      <figure class="hero-pic"><img src="assets/capa.webp" alt="Estudo de três embalagens turquesa de salame com ervas sobre mármore claro" fetchpriority="high"><figcaption>Estudo de embalagem · Salames Nhac!</figcaption></figure>
+    </div></section>
+    <section id="catalogo" class="section wrap" aria-labelledby="catalogo-t">
+      <div class="section-head"><h2 id="catalogo-t">O catálogo.</h2><p>Escolha uma família e abra a ficha para conhecer os cortes, os temperos e as combinações que estão nos planos da Nhac!</p></div>
+      <div class="filters" role="group" aria-label="Filtrar catálogo por família">
+        <button type="button" aria-pressed="true" data-filter="todas">Todas</button><button type="button" aria-pressed="false" data-filter="salames">Salames</button><button type="button" aria-pressed="false" data-filter="curados">Curados</button><button type="button" aria-pressed="false" data-filter="defumados">Defumados</button><button type="button" aria-pressed="false" data-filter="linguicas">Linguiças</button><button type="button" aria-pressed="false" data-filter="cozidos">Cozidos</button><button type="button" aria-pressed="false" data-filter="pastas">Pastas</button>
+      </div>
+      <p class="sr" id="resultados" role="status"></p>
+      <div class="families">
+        <article class="family" data-family="salames"><img loading="lazy" src="assets/salames.webp" alt="Salames na apresentação da linha Nhac!"><div class="family-body"><h3>Salames</h3><p>Do vinho e da pimenta ao perfil suave do Milano.</p><details><summary>Explorar salames</summary><ul><li><strong>Italiano</strong> com vinho e pimenta.</li><li><strong>Milano</strong> com tempero suave.</li><li><strong>Salaminhos</strong> em formato de petisco.</li></ul></details></div></article>
+        <article class="family" data-family="curados"><img loading="lazy" src="assets/curados.webp" alt="Charcutaria curada na apresentação da linha Nhac!"><div class="family-body"><h3>Curados</h3><p>Três cortes suínos com formatos e usos distintos.</p><details><summary>Explorar curados</summary><ul><li><strong>Copa</strong> de sobrepaleta.</li><li><strong>Pancetta</strong> de barriga suína enrolada.</li><li><strong>Guanciale</strong> de bochecha suína.</li></ul></details></div></article>
+        <article class="family" data-family="defumados"><img loading="lazy" src="assets/defumados.webp" alt="Defumados na apresentação da linha Nhac!"><div class="family-body"><h3>Defumados</h3><p>O bacon encontra a fumaça da macieira ou da pecã.</p><details><summary>Explorar defumados</summary><ul><li><strong>Bacon</strong> com defumação planejada em madeira de macieira ou pecã. Previsto em fatias ou cubos.</li><li><strong>Costelinha suína</strong> para finalizar na grelha.</li><li><strong>Linguicinha snack</strong> em formato fino para petiscar.</li></ul></details></div></article>
+        <article class="family" data-family="linguicas"><img loading="lazy" src="assets/linguicas.webp" alt="Linguiças na apresentação da linha Nhac!"><div class="family-body"><h3>Linguiças</h3><p>Queijo, melaço e pimenta-biquinho entram na mistura.</p><details><summary>Explorar linguiças</summary><ul><li><strong>Coalho e melaço</strong>, uma combinação de queijo e doçura.</li><li><strong>Biquinho e Canastra</strong>, pimenta e queijo mineiro.</li></ul></details></div></article>
+        <article class="family" data-family="cozidos">
+          <img loading="lazy" src="assets/cozidos.webp" alt="Estudo da mortadela e do pastrami em peças e fatias">
+          <div class="family-body"><h3>Cozidos</h3><p>Fatias para um sanduíche bem recheado.</p>
+            <details><summary>Explorar cozidos</summary><ul><li><strong>Pastrami</strong> de peito bovino, com pimenta e coentro.</li><li><strong>Mortadela artesanal</strong> de base suína, com pistache ou pimenta-verde.</li></ul></details>
+          </div>
+        </article>
+        <article class="family" data-family="pastas">
+          <img loading="lazy" src="assets/pastas.webp" alt="Estudo das rillettes, da terrine e da pasta apimentada">
+          <div class="family-body"><h3>Pastas</h3><p>Da carne desfiada à pimenta de passar no pão.</p>
+            <details><summary>Explorar pastas</summary><ul><li><strong>Rillettes</strong> de porco desfiado e cozido lentamente com ervas.</li><li><strong>’Nduja</strong>, embutido cremoso e picante para espalhar na torrada ou misturar à massa.</li></ul></details>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section id="mesa" class="table-section"><div class="wrap two-col">
+      <div><h2>À mesa.</h2><p>Do petisco ao prato quente, dois kits estão nos planos da marca.</p><figure class="kit"><img src="assets/kit.webp" loading="lazy" alt="Estudo de uma cesta de amostras Nhac!"></figure></div>
+      <div class="pairings"><article><h3>Happy Hour</h3><p>Para abrir uma roda de conversa. Salaminhos, fatias de copa, pão de casca firme e algo ácido compõem uma sugestão de tábua.</p></article><article><h3>Carbonara</h3><p>Para quem prefere juntar a turma em torno da panela. O guanciale é o ponto de partida para uma massa com queijo, ovos e pimenta.</p></article></div>
+    </div></section>
+    <section id="marca" class="section wrap two-col brand"><div class="mascote"><img src="assets/mascote.webp" loading="lazy" alt="Mascote Nhac!, um porco turquesa de óculos com uma auréola dourada"></div>
+      <div><h2>Feita de ideias mineiras.</h2><p>A Nhac! é um projeto de charcutaria artesanal de Uberlândia. A proposta reúne técnicas de cura e defumação e ingredientes que lembram Minas, como queijo Canastra e melaço.</p>
+        <p>Precisa entender de charcutaria para escolher um petisco? O porco de óculos e auréola da Nhac! convida a começar pelo que dá vontade: uma fatia de salame, uma tábua entre amigos ou um ingrediente novo na panela.</p></div>
+    </section>
+    <section id="negocios" class="trade"><div class="wrap two-col">
+      <div><h2>Empórios e food service.</h2><p>Que cortes fariam sentido na sua gôndola, tábua ou cozinha? Monte um resumo para uma futura conversa comercial. O atendimento da marca ainda está em preparação.</p></div>
+      <form id="brief"><div class="form-grid"><label>Estabelecimento<input name="estabelecimento" placeholder="Nome do negócio" maxlength="120" autocomplete="organization"></label><label>Canal<select name="canal"><option>Empório ou varejo</option><option>Restaurante ou bar</option><option>Hotel ou catering</option><option>Outro</option></select></label></div>
+        <fieldset><legend>Famílias de interesse</legend><div class="checks"><label><input type="checkbox" name="familia" value="Salames"> Salames</label><label><input type="checkbox" name="familia" value="Curados"> Curados</label><label><input type="checkbox" name="familia" value="Defumados"> Defumados</label><label><input type="checkbox" name="familia" value="Linguiças"> Linguiças</label><label><input type="checkbox" name="familia" value="Cozidos"> Cozidos</label><label><input type="checkbox" name="familia" value="Pastas"> Pastas</label></div></fieldset>
+        <label>O que você procura?<textarea name="necessidade" rows="3" maxlength="1200" placeholder="Formatos, volume estimado, uso no cardápio…"></textarea></label>
+        <div class="form-actions"><button type="button" id="copiar" class="button dark">Copiar briefing</button><button type="button" id="baixar" class="button light">Baixar .txt</button></div>
+        <p id="retorno" class="feedback" role="status"></p><label id="manual" hidden>Texto para copiar manualmente<textarea id="texto-manual" readonly rows="7"></textarea></label>
+      </form>
+    </div></section>
+  </main>
+  <footer><div class="wrap foot"><a class="logo" href="#inicio" aria-label="Nhac!, início"><img class="selo" src="assets/marca.webp" alt="" loading="lazy"></a><p>Charcutaria artesanal em planejamento · Uberlândia, MG</p><a href="#inicio">Voltar ao início</a></div></footer>
+</body>
+</html>
