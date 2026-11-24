@@ -5,6 +5,30 @@ const familias = document.querySelectorAll("[data-family]");
 const resultados = document.querySelector("#resultados");
 const permiteMovimento = window.matchMedia("(prefers-reduced-motion: no-preference)");
 
+const descobertas = {
+  linguicas: { nome: "Linguiças", texto: "Da toscana ao queijo coalho com melaço, ideias para uma grelha cheia de sabor.", imagem: "assets/linguicas.webp", alt: "Estudo de apresentação das linguiças Nhac!" },
+  salames: { nome: "Salames", texto: "Italiano, Milano, pepperoni e outras ideias para uma tábua que reúne a turma.", imagem: "assets/salames.webp", alt: "Estudo de apresentação dos salames Nhac!" },
+  bacon: { nome: "Bacon", texto: "Em fatias ou cubos, o defumado pensado para dar mais sabor às receitas.", imagem: "assets/defumados.webp", alt: "Estudo de apresentação do bacon e outros defumados Nhac!" }
+};
+const botoesDescoberta = document.querySelectorAll(".discover-tab");
+const imagemDescoberta = document.querySelector("#discover-image");
+const nomeDescoberta = document.querySelector("#discover-name");
+const textoDescoberta = document.querySelector("#discover-text");
+for (const botao of botoesDescoberta) {
+  botao.addEventListener("click", () => {
+    const item = descobertas[botao.dataset.discover];
+    for (const opcao of botoesDescoberta) opcao.setAttribute("aria-pressed", String(opcao === botao));
+    imagemDescoberta.src = item.imagem;
+    imagemDescoberta.alt = item.alt;
+    nomeDescoberta.textContent = item.nome;
+    textoDescoberta.textContent = item.texto;
+    if (window.gsap && permiteMovimento.matches) {
+      gsap.fromTo(".discover-frame", { opacity: 0.65, scale: 0.96, rotate: -2 }, { opacity: 1, scale: 1, rotate: 0, duration: 0.55, ease: "power3.out", overwrite: true });
+      gsap.fromTo(".discover-description", { opacity: 0.5, y: 10 }, { opacity: 1, y: 0, duration: 0.4, overwrite: true });
+    }
+  });
+}
+
 const menu = document.querySelector(".mobile-menu");
 const telaMobile = window.matchMedia("(max-width: 680px)");
 menu.open = !telaMobile.matches;
@@ -41,7 +65,7 @@ if (window.gsap) {
         }
       }
     }, { threshold: 0.12 });
-    document.querySelectorAll(".motion-copy, .motion-scene, .destaques-intro, .sabor-destaque, .section-head, .family, .pairings article, .kit, .brand > div, .trade .two-col > div, .trade form").forEach((element) => observer.observe(element));
+    document.querySelectorAll(".discover-copy, .discover-visual, .motion-copy, .motion-scene, .destaques-intro, .sabor-destaque, .section-head, .family, .pairings article, .kit, .brand > div, .trade .two-col > div, .trade form").forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   });
 }
