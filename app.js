@@ -5,9 +5,36 @@ const familias = document.querySelectorAll("[data-family]");
 const resultados = document.querySelector("#resultados");
 const permiteMovimento = window.matchMedia("(prefers-reduced-motion: no-preference)");
 
+const menu = document.querySelector(".mobile-menu");
+const telaMobile = window.matchMedia("(max-width: 680px)");
+menu.open = !telaMobile.matches;
+telaMobile.addEventListener("change", (event) => { menu.open = !event.matches; });
+menu.addEventListener("click", (event) => {
+  if (telaMobile.matches && event.target.closest("nav a")) menu.open = false;
+});
+menu.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && menu.open) {
+    menu.open = false;
+    menu.querySelector("summary").focus();
+  }
+});
+
 if (window.gsap) {
   gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
-    gsap.from(".hero-pic", { y: 10, opacity: 0.6, duration: 0.45, ease: "power2.out" });
+    const entrada = gsap.timeline({ defaults: { ease: "power3.out" } });
+    entrada.from(".hero-copy > *", { y: 24, opacity: 0, duration: 0.7, stagger: 0.1 })
+      .from(".hero-pic", { y: 32, rotation: 0, opacity: 0, duration: 0.85 }, "<0.15");
+
+    if (!("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        gsap.from(entry.target, { y: 28, opacity: 0, duration: 0.7, ease: "power2.out", clearProps: "transform,opacity" });
+      }
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".destaques-intro, .sabor-destaque, .section-head, .family, .pairings article, .kit, .brand > div, .trade .two-col > div, .trade form").forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   });
 }
 
