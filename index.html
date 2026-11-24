@@ -19,7 +19,10 @@
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
   <header><div class="wrap nav">
     <a class="logo" href="#inicio" aria-label="Nhac!, início"><img src="assets/simbolo.png" width="42" height="45" alt="">Nhac!</a>
-    <nav aria-label="Navegação principal"><a href="#catalogo">Catálogo</a><a href="#mesa">À mesa</a><a href="#marca">A marca</a><a class="nav-biz" href="#negocios">Para negócios</a></nav>
+    <details class="mobile-menu" open>
+      <summary>Menu <span aria-hidden="true" class="menu-icon"><i></i><i></i></span></summary>
+      <nav aria-label="Navegação principal"><a href="#catalogo">Catálogo</a><a href="#mesa">À mesa</a><a href="#marca">A marca</a><a class="nav-biz" href="#negocios">Para negócios</a></nav>
+    </details>
   </div></header>
   <main id="conteudo">
     <section class="hero"><div class="wrap hero-layout">
@@ -30,6 +33,16 @@
       </div>
       <figure class="hero-pic"><img src="assets/capa.webp" alt="Estudo de três embalagens turquesa de salame com ervas sobre mármore claro" fetchpriority="high"><figcaption>Estudo de embalagem · Salames Nhac!</figcaption></figure>
     </div></section>
+    <section class="destaques" aria-labelledby="destaques-t">
+      <div class="wrap">
+        <div class="destaques-intro"><p>Da grelha à tábua</p><h2 id="destaques-t">Os sabores que chegam chegando.</h2><p>Linguiças, salames e bacon são as estrelas da linha planejada. Escolha seu favorito e conheça as combinações em desenvolvimento.</p></div>
+        <div class="destaques-grid">
+          <article class="sabor-destaque"><img src="assets/linguicas.webp" loading="lazy" alt="Estudo de apresentação das linguiças artesanais"><div><p class="sabor-tag">Para a grelha</p><h3>Linguiças</h3><p>Da toscana ao queijo Canastra, combinações que fazem o churrasco ganhar conversa.</p><ul><li>Toscana com alho e vinho branco</li><li>Queijo coalho e melaço</li><li>Pimenta-biquinho e Canastra</li><li>Alho-poró e cream cheese</li><li>Provolone e tomate seco</li><li>Calabresa com erva-doce</li></ul></div></article>
+          <article class="sabor-destaque"><img src="assets/salames.webp" loading="lazy" alt="Estudo de apresentação de salames e salaminhos"><div><p class="sabor-tag">Para petiscar</p><h3>Salames</h3><p>Fatias para a tábua e salaminhos para acompanhar a conversa.</p><ul><li>Italiano com vinho e pimenta</li><li>Milano suave</li><li>Hamburguês com leve defumação</li><li>Chorizo com páprica</li><li>Pepperoni condimentado</li><li>Finocchiona com funcho</li></ul></div></article>
+          <article class="sabor-destaque bacon"><img src="assets/defumados.webp" loading="lazy" alt="Estudo de apresentação de bacon e outros defumados"><div><p class="sabor-tag">O defumado da vez</p><h3>Bacon</h3><p>Barriga suína curada com sal e açúcar mascavo, com defumação planejada em madeira de macieira ou pecã.</p><ul><li>Fatiado fino para sanduíches</li><li>Fatiado grosso para a frigideira</li><li>Em cubos para receitas</li></ul><p class="sabor-nota">Uma receita, três jeitos de aproveitar.</p></div></article>
+        </div>
+      </div>
+    </section>
     <section id="catalogo" class="section wrap" aria-labelledby="catalogo-t">
       <div class="section-head"><h2 id="catalogo-t">O catálogo.</h2><p>Escolha uma família e abra a ficha para conhecer os cortes, os temperos e as combinações que estão nos planos da Nhac!</p></div>
       <div class="filters" role="group" aria-label="Filtrar catálogo por família">
@@ -37,10 +50,10 @@
       </div>
       <p class="sr" id="resultados" role="status"></p>
       <div class="families">
-        <article class="family" data-family="salames"><img loading="lazy" src="assets/salames.webp" alt="Salames na apresentação da linha Nhac!"><div class="family-body"><h3>Salames</h3><p>Do vinho e da pimenta ao perfil suave do Milano.</p><details><summary>Explorar salames</summary><ul><li><strong>Italiano</strong> com vinho e pimenta.</li><li><strong>Milano</strong> com tempero suave.</li><li><strong>Salaminhos</strong> em formato de petisco.</li></ul></details></div></article>
+        <article class="family" data-family="salames"><img loading="lazy" src="assets/salames.webp" alt="Salames na apresentação da linha Nhac!"><div class="family-body"><h3>Salames</h3><p>Do vinho e da pimenta ao perfil suave do Milano.</p><details><summary>Explorar salames</summary><ul><li><strong>Italiano</strong> com vinho e pimenta.</li><li><strong>Milano</strong> suave e de moagem fina.</li><li><strong>Hamburguês</strong> com leve toque defumado.</li><li><strong>Chorizo espanhol</strong> com páprica.</li><li><strong>Pepperoni</strong> picante e condimentado.</li><li><strong>Finocchiona</strong> com funcho e vinho.</li><li><strong>Fuet</strong> suave e amendoado.</li><li><strong>Salaminhos</strong> em formato de petisco.</li></ul></details></div></article>
         <article class="family" data-family="curados"><img loading="lazy" src="assets/curados.webp" alt="Charcutaria curada na apresentação da linha Nhac!"><div class="family-body"><h3>Curados</h3><p>Três cortes suínos com formatos e usos distintos.</p><details><summary>Explorar curados</summary><ul><li><strong>Copa</strong> de sobrepaleta.</li><li><strong>Pancetta</strong> de barriga suína enrolada.</li><li><strong>Guanciale</strong> de bochecha suína.</li></ul></details></div></article>
         <article class="family" data-family="defumados"><img loading="lazy" src="assets/defumados.webp" alt="Defumados na apresentação da linha Nhac!"><div class="family-body"><h3>Defumados</h3><p>O bacon encontra a fumaça da macieira ou da pecã.</p><details><summary>Explorar defumados</summary><ul><li><strong>Bacon</strong> com defumação planejada em madeira de macieira ou pecã. Previsto em fatias ou cubos.</li><li><strong>Costelinha suína</strong> para finalizar na grelha.</li><li><strong>Linguicinha snack</strong> em formato fino para petiscar.</li></ul></details></div></article>
-        <article class="family" data-family="linguicas"><img loading="lazy" src="assets/linguicas.webp" alt="Linguiças na apresentação da linha Nhac!"><div class="family-body"><h3>Linguiças</h3><p>Queijo, melaço e pimenta-biquinho entram na mistura.</p><details><summary>Explorar linguiças</summary><ul><li><strong>Coalho e melaço</strong>, uma combinação de queijo e doçura.</li><li><strong>Biquinho e Canastra</strong>, pimenta e queijo mineiro.</li></ul></details></div></article>
+        <article class="family" data-family="linguicas"><img loading="lazy" src="assets/linguicas.webp" alt="Linguiças na apresentação da linha Nhac!"><div class="family-body"><h3>Linguiças</h3><p>Queijo, melaço e pimenta-biquinho entram na mistura.</p><details><summary>Explorar linguiças</summary><ul><li><strong>Toscana</strong> com alho e vinho branco.</li><li><strong>Cuiabana</strong> com queijo e pimenta-de-cheiro.</li><li><strong>Coalho e melaço</strong>, uma combinação agridoce.</li><li><strong>Biquinho e Canastra</strong>, pimenta e queijo mineiro.</li><li><strong>Alho-poró e cream cheese</strong>, suave e cremosa.</li><li><strong>Provolone e tomate seco</strong>, recheada.</li><li><strong>Calabresa</strong> com erva-doce.</li><li><strong>Lombo e ervas finas</strong>.</li></ul></details></div></article>
         <article class="family" data-family="cozidos">
           <img loading="lazy" src="assets/cozidos.webp" alt="Estudo da mortadela e do pastrami em peças e fatias">
           <div class="family-body"><h3>Cozidos</h3><p>Fatias para um sanduíche bem recheado.</p>
