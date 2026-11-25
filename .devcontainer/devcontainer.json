@@ -1,0 +1,11 @@
+{
+  "name": "Nhac! Plataforma",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node@sha256:a38df2c90c734abef88f6d7a1e6a818899a0179019010f9e51caf900903a388e",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Nhac! Plataforma de testes",
+      "onAutoForward": "notify"
+    }
+  }
+}
