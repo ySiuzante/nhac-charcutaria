@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { db } from './database.mjs';
 import {
   approvedWholesale, changeCart, checkout, CommerceError, getCart, orders, products, requestWholesale,
-  setWholesaleApproval, updateOrder, wholesaleAccount, wholesaleRequests,
+  setWholesaleApproval, updateOrder, updatePrices, wholesaleAccount, wholesaleRequests,
 } from './commerce.mjs';
 import { decryptSecret, getEncryptionKey, hashToken, normalizeEmail, token, totpCounter, validEmail, verifyPassword } from './security.mjs';
 
@@ -148,11 +148,12 @@ async function route(req, res) {
       if (req.method === 'GET' && pathname === '/api/admin/orders') {
         return send(res, 200, { orders: orders(null), products: products(true), wholesale: wholesaleRequests() });
       }
-      if (req.method === 'POST' && ['/api/admin/orders', '/api/admin/wholesale'].includes(pathname)) {
+      if (req.method === 'POST' && ['/api/admin/orders', '/api/admin/wholesale', '/api/admin/prices'].includes(pathname)) {
         if (!csrfValid(req, current)) return send(res, 403, { error: 'Sessão inválida. Atualize a página.' });
         let body;
         try { body = await jsonBody(req); } catch { return send(res, 400, { error: 'Dados inválidos.' }); }
-        if (pathname.endsWith('/wholesale')) setWholesaleApproval(current.id, body.userId, body.approved);
+        if (pathname.endsWith('/prices')) updatePrices(current.id, body);
+        else if (pathname.endsWith('/wholesale')) setWholesaleApproval(current.id, body.userId, body.approved);
         else {
           if (typeof body.id !== 'string') return send(res, 400, { error: 'Pedido inválido.' });
           updateOrder(current.id, body.id, body.status);

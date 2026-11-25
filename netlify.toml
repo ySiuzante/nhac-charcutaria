@@ -1,0 +1,15 @@
+[build]
+  command = "node plataforma/hosted/build.mjs"
+  publish = "dist-netlify"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[[headers]]
+  for = "/plataforma/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Robots-Tag = "noindex"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://gdhxxdjuvsvygtrdaaxu.supabase.co; style-src 'self'; img-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"

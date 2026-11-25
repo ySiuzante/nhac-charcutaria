@@ -11,6 +11,7 @@ const orderList = document.querySelector("#order-list");
 const stockList = document.querySelector("#stock-list");
 const wholesaleForm = document.querySelector("#wholesale-form");
 const wholesaleList = document.querySelector("#wholesale-list");
+const priceList = document.querySelector("#price-list");
 const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const statuses = { received: "Recebido", preparing: "Em preparo", ready: "Pronto", cancelled: "Cancelado" };
 
@@ -29,7 +30,7 @@ function element(tag, value, className) {
 }
 
 async function shopApi(path, data) {
-  const response = await fetch(path, {
+  const response = await request(path, {
     signal: shopSession.signal,
     ...(data && {
       method: "POST",
@@ -154,6 +155,7 @@ async function loadOrders(role) {
     orderList.append(row);
   }
   if (isAdmin) {
+    renderPrices(result.products);
     stockList.replaceChildren();
     for (const product of result.products) stockList.append(element("li", `${product.name} · ${product.stock} un.`));
     wholesaleList.replaceChildren();
@@ -170,6 +172,41 @@ async function loadOrders(role) {
       row.append(element("strong", account.company), element("p", `${account.name} · ${approved ? "Aprovado" : "Pendente"}`), button);
       wholesaleList.append(row);
     }
+  }
+}
+
+function renderPrices(products) {
+  priceList.replaceChildren();
+  for (const product of products) {
+    const form = element("form", undefined, "order-card price-form");
+    const save = element("button", "Salvar preços", "shop-add");
+    const fields = ["retail_cents", "wholesale_cents"].map((key, index) => {
+      const label = element("label", index === 0 ? "Varejo (R$)" : "Atacado (R$)");
+      const input = element("input");
+      input.type = "number";
+      input.required = true;
+      input.step = "0.01";
+      input.min = "0.01";
+      input.max = "999999.99";
+      input.name = key;
+      input.value = (product[key] / 100).toFixed(2);
+      label.append(input);
+      return label;
+    });
+    save.type = "submit";
+    form.append(element("strong", product.name), ...fields, save);
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      withFeedback(async () => {
+        save.disabled = true;
+        try {
+          const prices = Object.fromEntries([...new FormData(form)].map(([key, value]) => [key, Math.round(Number(value) * 100)]));
+          await shopApi("/api/admin/prices", { ...prices, productId: product.id });
+          shopMessage.textContent = "Preços atualizados.";
+        } finally { save.disabled = false; }
+      });
+    });
+    priceList.append(form);
   }
 }
 
@@ -217,7 +254,7 @@ document.addEventListener("nhac:session", event => {
   catalog = [];
   shopChannel.value = "retail";
   shopSearch.value = "";
-  for (const node of [productList, cartList, orderList, stockList, wholesaleList, shopMessage]) node.replaceChildren();
+  for (const node of [productList, cartList, orderList, stockList, wholesaleList, priceList, shopMessage]) node.replaceChildren();
   wholesaleForm.reset();
   wholesaleForm.hidden = true;
   document.querySelector("#wholesale-status").hidden = true;
@@ -225,6 +262,8 @@ document.addEventListener("nhac:session", event => {
   shop.hidden = !isCustomer;
   document.querySelector("#shop-nav").hidden = !isCustomer;
   document.querySelector("#stock-panel").hidden = role !== "MAIN";
+  document.querySelector("#prices-panel").hidden = role !== "MAIN";
+  document.querySelector("#prices-nav").hidden = role !== "MAIN";
   document.querySelector("#wholesale-panel").hidden = role !== "MAIN";
   const note = document.querySelector("#demo-note");
   note.hidden = true;

@@ -12,6 +12,16 @@ O cliente pode buscar produtos, alternar entre varejo e atacado, editar o carrin
 
 Cada execução cria um banco temporário separado do banco de desenvolvimento, com credenciais novas. Encerre pelo terminal para finalizar a sessão. A demonstração destina-se a localhost ou a uma porta privada no Codespaces.
 
+## Publicar o ambiente de testes
+
+O Netlify usa o comando de build definido em `netlify.toml`. O menu da vitrine inclui **Minha conta**, que abre `/plataforma/`. Use a branch `plataforma-nhac` na importação do GitHub. A versão hospedada usa Supabase Auth e PostgreSQL.
+
+No Supabase, configure **Authentication → URL Configuration** com o endereço HTTPS do projeto Netlify e autorize o redirecionamento exato para `/plataforma/`. Configure um SMTP transacional para enviar confirmações aos clientes. O e-mail de cada cliente deve ser confirmado antes do acesso à loja.
+
+O administrador usa o mesmo formulário de acesso, com e-mail confirmado e autenticador TOTP. A lista de administradores fica no banco, em `nhac.administrators`. A área **Preços dos produtos** atualiza os valores de varejo e atacado para compras futuras. Depois de autorizado, um cliente alterna entre as duas modalidades. O estoque e os valores iniciais são fictícios e os pedidos são registrados sem cobrança.
+
+O esquema hospedado está em `hosted/schema.sql`. O build publica somente a interface e seus recursos. A configuração no navegador contém a chave publicável do Supabase. Use o esquema privado para os dados comerciais e mantenha as permissões do banco ao criar novas operações.
+
 ## Configurar a chave
 
 No PowerShell, gere uma chave aleatória para criptografar os segredos do aplicativo autenticador:

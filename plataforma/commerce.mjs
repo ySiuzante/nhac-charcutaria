@@ -98,6 +98,19 @@ export function setWholesaleApproval(actorId, userId, approved) {
   });
 }
 
+export function updatePrices(actorId, { productId, retail_cents, wholesale_cents }) {
+  if (typeof productId !== 'string' || ![retail_cents, wholesale_cents]
+    .every(value => Number.isInteger(value) && value >= 1 && value <= 99999999)) {
+    throw new CommerceError(400, 'Informe preços válidos.');
+  }
+  return transaction(() => {
+    const result = db.prepare('UPDATE products SET retail_cents=?,wholesale_cents=? WHERE id=?')
+      .run(retail_cents, wholesale_cents, productId);
+    if (!result.changes) throw new CommerceError(404, 'Produto não encontrado.');
+    db.prepare('INSERT INTO audit_log(actor_id,action,target_id) VALUES(?,?,?)').run(actorId, 'prices', productId);
+  });
+}
+
 function validateChannel(userId, channel) {
   if (channel === 'retail') return;
   if (channel !== 'wholesale') throw new CommerceError(400, 'Modalidade inválida.');

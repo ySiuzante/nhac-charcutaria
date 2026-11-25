@@ -6,7 +6,7 @@ process.env.NHAC_DB_PATH = ':memory:';
 const { db } = await import('../database.mjs');
 const {
   changeCart, checkout, demoProducts, getCart, orders, products, requestWholesale,
-  setWholesaleApproval, updateOrder,
+  setWholesaleApproval, updateOrder, updatePrices,
 } = await import('../commerce.mjs');
 
 test('pedidos preservam preço, estoque e isolamento entre clientes', () => {
@@ -44,6 +44,9 @@ test('pedidos preservam preço, estoque e isolamento entre clientes', () => {
   updateOrder('admin', order.id, 'cancelled');
   updateOrder('admin', order.id, 'cancelled');
   assert.equal(products(false)[0].stock, 6);
+  updatePrices('admin', { productId, retail_cents: 2990, wholesale_cents: 2190 });
+  assert.equal(getCart('buyer', 'retail').total_cents, 36 * 2990);
+  assert.equal(orders('buyer')[0].total_cents, 6 * 1890);
   assert.throws(() => updateOrder('admin', order.id, 'ready'), { status: 409 });
   setWholesaleApproval('admin', 'buyer', false);
   assert.throws(() => getCart('buyer', 'wholesale'), { status: 403 });

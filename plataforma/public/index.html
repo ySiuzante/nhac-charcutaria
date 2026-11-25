@@ -29,11 +29,31 @@
           <p id="login-message" class="message" role="alert"></p>
           <button class="primary" id="login-button" type="submit">Entrar</button>
         </form>
+        <button id="register-toggle" class="text-button auth-switch" type="button" hidden>Criar conta de cliente</button>
+        <form id="register-form" hidden>
+          <h3>Criar conta de cliente</h3>
+          <label for="register-name">Nome completo</label><input id="register-name" name="name" autocomplete="name" required minlength="2" maxlength="120">
+          <label for="register-email">E-mail</label><input id="register-email" name="email" type="email" autocomplete="username" required maxlength="254">
+          <label for="register-password">Senha</label><input id="register-password" name="password" type="password" autocomplete="new-password" required minlength="12" maxlength="72">
+          <p id="register-message" role="status"></p>
+          <button class="primary" type="submit">Cadastrar</button>
+          <button id="register-back" class="text-button auth-switch" type="button">Voltar ao login</button>
+        </form>
+        <form id="mfa-form" hidden>
+          <h3>Confirme seu acesso administrativo</h3>
+          <button id="mfa-enroll" type="button" class="text-button" hidden>Configurar autenticador</button>
+          <p id="mfa-secret" hidden></p>
+          <label for="mfa-code">Código de seis dígitos</label>
+          <input id="mfa-code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+          <p id="mfa-message" class="message" role="alert"></p>
+          <button class="primary" type="submit">Confirmar código</button>
+          <button id="mfa-back" class="text-button auth-switch" type="button">Voltar ao login</button>
+        </form>
         <p class="help">Os acessos são disponibilizados pela equipe responsável pela Nhac!.</p>
       </div>
     </section>
     <section id="account-screen" class="workspace" hidden>
-      <aside class="sidebar"><div class="brand">Nhac<span>!</span></div><nav aria-label="Área da conta"><a href="#account-name">Visão geral</a><a id="shop-nav" href="#store" hidden>Loja</a><a href="#order-panel">Pedidos</a><a id="team-nav" href="#team" hidden>Contas</a></nav><button id="logout-button" class="logout" type="button">Sair da conta</button></aside>
+      <aside class="sidebar"><div class="brand">Nhac<span>!</span></div><nav aria-label="Área da conta"><a href="#account-name">Visão geral</a><a id="shop-nav" href="#store" hidden>Loja</a><a href="#order-panel">Pedidos</a><a id="prices-nav" href="#prices-panel" hidden>Preços</a><a id="team-nav" href="#team" hidden>Contas</a></nav><button id="logout-button" class="logout" type="button">Sair da conta</button></aside>
       <div class="workspace-body">
         <div class="workspace-top"><span>Visão geral</span><span class="identity" id="account-email"></span></div>
         <div class="workspace-content"><h1>Olá, <span id="account-name">bem-vindo</span>.</h1>
@@ -59,6 +79,7 @@
           <p id="shop-message" class="shop-message" role="status"></p>
           <section id="order-panel" class="shop-section" aria-labelledby="order-title"><h2 id="order-title">Pedidos</h2><div id="order-list"></div></section>
           <section id="stock-panel" class="shop-section" hidden aria-labelledby="stock-title"><h2 id="stock-title">Estoque disponível</h2><ul id="stock-list" class="stock-list"></ul></section>
+          <section id="prices-panel" class="shop-section" hidden aria-labelledby="prices-title"><h2 id="prices-title">Preços dos produtos</h2><div id="price-list"></div></section>
           <section id="wholesale-panel" class="shop-section" hidden aria-labelledby="wholesale-title"><h2 id="wholesale-title">Contas de atacado</h2><div id="wholesale-list"></div></section>
           <section class="team" id="team" hidden aria-labelledby="team-title"><h2 id="team-title">Contas da plataforma</h2><p>Contas cadastradas e respectivos níveis de acesso.</p><div class="team-table"><table><thead><tr><th scope="col">Nome</th><th scope="col">E-mail</th><th scope="col">Acesso</th><th scope="col">Situação</th></tr></thead><tbody id="team-rows"></tbody></table></div><p id="team-message" role="status"></p></section>
         </div>

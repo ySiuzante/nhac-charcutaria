@@ -6,8 +6,90 @@ const loginForm = document.querySelector("#login-form");
 const message = document.querySelector("#login-message");
 const loginButton = document.querySelector("#login-button");
 let csrfToken = "";
+const request = window.nhacHosted?.request ?? window.fetch.bind(window);
+const registerForm = document.querySelector("#register-form");
+const registerToggle = document.querySelector("#register-toggle");
+const mfaForm = document.querySelector("#mfa-form");
+const mfaMessage = document.querySelector("#mfa-message");
+const mfaEnroll = document.querySelector("#mfa-enroll");
+const mfaSecret = document.querySelector("#mfa-secret");
+
+function switchAuth(form) {
+  loginForm.hidden = form !== loginForm;
+  registerForm.hidden = form !== registerForm;
+  mfaForm.hidden = form !== mfaForm;
+  registerToggle.hidden = !window.nhacHosted || form !== loginForm;
+}
+
+if (window.nhacHosted) {
+  switchAuth(loginForm);
+  document.querySelector('label[for="code"]').hidden = true;
+  document.querySelector("#code").hidden = true;
+}
+registerToggle.addEventListener("click", () => {
+  switchAuth(registerForm);
+  document.querySelector("#register-name").focus();
+});
+document.querySelector("#register-back").addEventListener("click", () => switchAuth(loginForm));
+registerForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const button = registerForm.querySelector('button[type="submit"]');
+  const status = document.querySelector("#register-message");
+  button.disabled = true;
+  status.textContent = "";
+  try {
+    const data = Object.fromEntries(new FormData(registerForm));
+    await window.nhacHosted.register(data);
+    registerForm.reset();
+    status.textContent = "Confira a caixa de entrada e confirme seu e-mail para acessar a loja.";
+  } catch (error) {
+    status.textContent = error.message;
+  } finally { button.disabled = false; }
+});
+
+async function showVerification() {
+  switchAuth(mfaForm);
+  mfaSecret.hidden = true;
+  mfaSecret.textContent = "";
+  mfaMessage.textContent = "";
+  mfaEnroll.hidden = await window.nhacHosted.hasAuthenticator();
+  (mfaEnroll.hidden ? document.querySelector("#mfa-code") : mfaEnroll).focus();
+}
+
+mfaEnroll.addEventListener("click", async () => {
+  mfaEnroll.disabled = true;
+  try {
+    const secret = await window.nhacHosted.enroll();
+    mfaSecret.textContent = "Adicione esta chave ao seu autenticador e confirme com o código de seis dígitos. " + secret;
+    mfaSecret.hidden = false;
+    mfaEnroll.hidden = true;
+    document.querySelector("#mfa-code").focus();
+  } catch (error) { mfaMessage.textContent = error.message; }
+  finally { mfaEnroll.disabled = false; }
+});
+mfaForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const button = mfaForm.querySelector('button[type="submit"]');
+  button.disabled = true;
+  try {
+    await window.nhacHosted.verify(document.querySelector("#mfa-code").value);
+    mfaForm.reset();
+    mfaSecret.textContent = "";
+    await refreshSession();
+  } catch (error) { mfaMessage.textContent = error.message; }
+  finally { button.disabled = false; }
+});
+document.querySelector("#mfa-back").addEventListener("click", async () => {
+  try {
+    await window.nhacHosted.signOut();
+    mfaSecret.textContent = "";
+    mfaForm.reset();
+    switchAuth(loginForm);
+  } catch (error) { mfaMessage.textContent = error.message; }
+});
 
 function showAccount(user) {
+  switchAuth(loginForm);
   document.querySelector("#account-email").textContent = user.email;
   document.querySelector("#account-name").textContent = user.name || user.email.split("@")[0];
   document.querySelector("#account-role").textContent = user.role === "MAIN" ? "Administração principal" : "Conta ativa";
@@ -26,7 +108,7 @@ async function loadAccounts() {
   rows.replaceChildren();
   status.textContent = "Carregando contas…";
   try {
-    const response = await fetch("/api/admin/users", { credentials: "same-origin" });
+    const response = await request("/api/admin/users", { credentials: "same-origin" });
     if (!response.ok) throw new Error("accounts");
     const data = await response.json();
     for (const account of data.users) {
@@ -45,7 +127,8 @@ async function loadAccounts() {
 }
 
 async function refreshSession() {
-  const response = await fetch("/api/auth/me", { credentials: "same-origin" });
+  const response = await request("/api/auth/me", { credentials: "same-origin" });
+  if (response.status === 428) return showVerification();
   if (response.ok) {
     const data = await response.json();
     csrfToken = data.csrfToken;
@@ -58,18 +141,23 @@ loginForm.addEventListener("submit", async (event) => {
   loginButton.disabled = true;
   message.textContent = "";
   try {
-    const response = await fetch("/api/auth/login", {
+    const response = await request("/api/auth/login", {
       method: "POST",
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.fromEntries(new FormData(loginForm)))
     });
+    if (response.status === 428) {
+      loginForm.reset();
+      return await showVerification();
+    }
     if (!response.ok) {
-      message.textContent = response.status === 429
+      const detail = window.nhacHosted ? (await response.json()).error : null;
+      message.textContent = detail || (response.status === 429
         ? "Muitas tentativas. Aguarde antes de tentar novamente."
         : response.status === 401
           ? "Confira o e-mail, a senha e o código de autenticação."
-          : "Não foi possível entrar. Tente novamente.";
+          : "Não foi possível entrar. Tente novamente.");
       return;
     }
     const data = await response.json();
@@ -85,7 +173,7 @@ loginForm.addEventListener("submit", async (event) => {
 
 document.querySelector("#logout-button").addEventListener("click", async () => {
   try {
-    const response = await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": csrfToken } });
+    const response = await request("/api/auth/logout", { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": csrfToken } });
     if (!response.ok) throw new Error("logout");
     csrfToken = "";
     document.dispatchEvent(new CustomEvent("nhac:session", { detail: null }));
